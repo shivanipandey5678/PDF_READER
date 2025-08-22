@@ -7,14 +7,11 @@ import { QdrantVectorStore } from "@langchain/qdrant";
 
 
 async function chat() {
-
-    const SYSTEM_PROMPT = `
-    you reply around your given  context if someone ask from outside say politely that sorry i can not give u ans about this this is not releted to my context
-    ,while giving answer if it is from your context please always mention the source location like page number book name and all in clear way i gave you answer from this place
-    `
+    
+    
 
     let USER_PROMPT = `
-    what is web workers
+     The	connection	option in sql
  `;
     
     const client = new OpenAI({
@@ -40,7 +37,11 @@ async function chat() {
 
     const relaventChunk = await vector_search.invoke(USER_PROMPT);
 
- 
+    const SYSTEM_PROMPT = ` 
+
+    always try to mention the source place like you are checking it from pdf so page number section number book or pdf
+    name .
+    ${JSON.stringify(relaventChunk)}`;
 
  const messages= [
     {role:'system', content:SYSTEM_PROMPT},
